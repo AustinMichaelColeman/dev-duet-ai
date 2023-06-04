@@ -1,2 +1,3 @@
-# git-collaborator
-A code collaborator plugin for ChatGPT and for GitHub.
+# dev-duet-ai
+
+DevDuetAI is a code collaborator plugin for ChatGPT and for GitHub.
