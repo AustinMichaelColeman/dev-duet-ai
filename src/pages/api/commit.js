@@ -2,7 +2,6 @@ import { Octokit } from "@octokit/rest";
 
 export default async function commit(req, res) {
   const {
-    access_token,
     ownerUsername,
     repositoryName,
     filePath,
@@ -11,6 +10,7 @@ export default async function commit(req, res) {
     branchName,
   } = req.body;
 
+  const access_token = req.headers.authorization.split(" ")[1];
   const octokit = new Octokit({ auth: access_token });
 
   try {

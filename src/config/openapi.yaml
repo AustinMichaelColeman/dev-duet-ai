@@ -42,7 +42,6 @@ components:
     commitRequest:
       type: object
       required:
-        - access_token
         - ownerUsername
         - repositoryName
         - filePath
@@ -50,9 +49,6 @@ components:
         - fileContent
         - branchName
       properties:
-        access_token:
-          type: string
-          description: GitHub access token.
         ownerUsername:
           type: string
           description: The username of the repository owner.
