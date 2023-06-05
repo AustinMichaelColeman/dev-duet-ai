@@ -1,11 +1,6 @@
 export default async function aiplugin(req, res) {
-  const {
-    GITHUB_APP_INSTALLATION_URL,
-    SERVER_URL,
-    CONTACT_EMAIL,
-    OPENAI_VERIFICATION_TOKEN,
-    PLUGIN_NAME,
-  } = process.env;
+  const { SERVER_URL, CONTACT_EMAIL, OPENAI_VERIFICATION_TOKEN, PLUGIN_NAME } =
+    process.env;
 
   try {
     const config = {
