@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: DevDuet
+  title: DevDuetAI
   description: Facilitates generating commits for GitHub.
   version: v1
 servers:
