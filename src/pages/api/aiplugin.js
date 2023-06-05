@@ -19,7 +19,7 @@ export default async function aiplugin(req, res) {
       legal_info_url: `${SERVER_URL}/terms`,
       auth: {
         type: "oauth",
-        client_url: `${SERVER_URL}/api/token`,
+        client_url: `${SERVER_URL}/api/auth`,
         scope: "",
         authorization_url: `${SERVER_URL}/api/token`,
         authorization_content_type: "application/json",
