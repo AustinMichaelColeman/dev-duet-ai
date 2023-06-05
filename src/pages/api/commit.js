@@ -15,26 +15,26 @@ export default async function commit(req, res) {
 
   try {
     const { data: blobData } = await octokit.git.createBlob({
-      ownerUsername,
-      repositoryName,
-      fileContent,
+      owner: ownerUsername,
+      repo: repositoryName,
+      content: fileContent,
       encoding: "utf-8",
     });
 
     const { data: refData } = await octokit.git.getRef({
-      ownerUsername,
-      repositoryName,
+      owner: ownerUsername,
+      repo: repositoryName,
       ref: `heads/${branchName}`,
     });
     const baseTreeSha = refData.object.sha;
 
     const { data: treeData } = await octokit.git.createTree({
-      ownerUsername,
-      repositoryName,
+      owner: ownerUsername,
+      repo: repositoryName,
       base_tree: baseTreeSha,
       tree: [
         {
-          filePath,
+          path: filePath,
           mode: "100644",
           type: "blob",
           sha: blobData.sha,
@@ -43,16 +43,16 @@ export default async function commit(req, res) {
     });
 
     const { data: commitData } = await octokit.git.createCommit({
-      ownerUsername,
-      repositoryName,
-      commitMessage,
+      owner: ownerUsername,
+      repo: repositoryName,
+      message: commitMessage,
       tree: treeData.sha,
       parents: [baseTreeSha],
     });
 
     await octokit.git.updateRef({
-      ownerUsername,
-      repositoryName,
+      owner: ownerUsername,
+      repo: repositoryName,
       ref: `heads/${branchName}`,
       sha: commitData.sha,
     });
