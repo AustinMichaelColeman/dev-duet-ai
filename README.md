@@ -1,6 +1,6 @@
 # dev-duet-ai
 
-A code helper plugin for ChatGPT and for GitHub.
+A code collaborator plugin for ChatGPT and for GitHub.
 
 Here's an example of what it can do:
 
