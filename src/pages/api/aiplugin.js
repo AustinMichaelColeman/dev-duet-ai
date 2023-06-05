@@ -19,9 +19,9 @@ export default async function aiplugin(req, res) {
       legal_info_url: `${SERVER_URL}/terms`,
       auth: {
         type: "oauth",
-        client_url: `${SERVER_URL}/api/auth`,
+        client_url: "https://github.com/login/oauth/authorize",
         scope: "",
-        authorization_url: `${SERVER_URL}/api/token`,
+        authorization_url: "https://github.com/login/oauth/access_token",
         authorization_content_type: "application/json",
         verification_tokens: {
           openai: OPENAI_VERIFICATION_TOKEN,
