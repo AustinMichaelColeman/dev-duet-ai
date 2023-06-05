@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/.well-known/ai-plugin.json",
+      "destination": "/api/aiplugin"
+    },
+    {
+      "source": "/openapi.yaml",
+      "destination": "/api/openapi"
+    }
+  ]
+}

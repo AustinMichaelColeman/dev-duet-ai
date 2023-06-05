@@ -1,0 +1,94 @@
+openapi: 3.0.1
+info:
+  title: DevDuet
+  description: Facilitates generating commits for GitHub.
+  version: v1
+servers:
+  - url: __SERVER_URL__
+paths:
+  /api/commit:
+    post:
+      operationId: commit
+      summary: Create a commit in a specified repository.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/commitRequest"
+      responses:
+        "200":
+          description: Commit created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/commitResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+components:
+  schemas:
+    commitRequest:
+      type: object
+      required:
+        - access_token
+        - ownerUsername
+        - repositoryName
+        - filePath
+        - commitMessage
+        - fileContent
+        - branchName
+      properties:
+        access_token:
+          type: string
+          description: GitHub access token.
+        ownerUsername:
+          type: string
+          description: The username of the repository owner.
+        repositoryName:
+          type: string
+          description: The name of the repository.
+        filePath:
+          type: string
+          description: The path to the file.
+        commitMessage:
+          type: string
+          description: The commit message.
+        fileContent:
+          type: string
+          description: The content of the file to commit.
+        branchName:
+          type: string
+          description: The branch to commit to.
+    commitResponse:
+      type: object
+      required:
+        - commitMessage
+      properties:
+        commitMessage:
+          type: string
+          description: A message about the result of the commit operation.
+    errorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: A message about the error that occurred.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
