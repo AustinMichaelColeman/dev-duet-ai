@@ -9,7 +9,7 @@ paths:
   /api/commit:
     post:
       operationId: commit
-      summary: Create a commit in a specified repository.
+      summary: Create a commit using the GitHub API.
       security:
         - BearerAuth: []
       requestBody:
