@@ -1,9 +1,17 @@
-import { Octokit } from "@octokit/rest";
+import { Octokit } from '@octokit/rest';
+import extractToken from '@/utils/extractToken';
 
 export default async function listFiles(req, res) {
   const { ownerUsername, repositoryName, branchName } = req.body;
 
-  const access_token = req.headers.authorization.split(" ")[1];
+  let access_token;
+  try {
+    access_token = extractToken(req);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ error: error.message });
+  }
+
   const octokit = new Octokit({ auth: access_token });
 
   try {
@@ -15,13 +23,13 @@ export default async function listFiles(req, res) {
     });
 
     // Filter out tree entries that are not files.
-    const files = treeData.tree.filter((item) => item.type === "blob");
+    const files = treeData.tree.filter((item) => item.type === 'blob');
 
     res.status(200).json({ files });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ message: "An error occurred while listing the files." });
+      .json({ message: 'An error occurred while listing the files.' });
   }
 }
