@@ -3,9 +3,6 @@ export default function auth(req, res) {
     const { response_type, client_id, scope, redirect_uri } = req.query;
     const { GITHUB_APP_INSTALLATION_URL } = process.env;
 
-    console.log("auth req.query", req.query);
-    console.log("auth req.body", req.body);
-
     const params = new URLSearchParams({
       client_id,
       redirect_uri,
