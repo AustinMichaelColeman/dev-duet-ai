@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default async function token(req, res) {
   const { client_id, client_secret, code, redirect_uri } = req.body;
-  console.log("req.body", req.body);
 
   const { GITHUB_OAUTH_TOKEN_URL } = process.env;
 
