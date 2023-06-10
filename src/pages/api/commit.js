@@ -1,4 +1,5 @@
 import GitHub from '@/utils/github';
+import extractToken from '@/utils/extractToken';
 
 export default async function commit(req, res) {
   const {
@@ -10,7 +11,14 @@ export default async function commit(req, res) {
     branchName,
   } = req.body;
 
-  const access_token = req.headers.authorization.split(' ')[1];
+  let access_token;
+  try {
+    access_token = extractToken(req);
+  } catch (error) {
+    console.error(error);
+    return res.status(401).json({ error: error.message });
+  }
+
   const github = new GitHub(access_token);
 
   try {
