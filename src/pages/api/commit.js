@@ -1,4 +1,4 @@
-import GitHub from '../../utils/github';
+import GitHub from '@/utils/github';
 
 export default async function commit(req, res) {
   const {
