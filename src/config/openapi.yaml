@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: DevDuetAI
-  description: Facilitates generating commits for GitHub.
+  description: Facilitates generating commits and managing files for GitHub.
   version: v1
 servers:
   - url: __SERVER_URL__
@@ -25,6 +25,68 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/commitResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+  /api/readFile:
+    post:
+      operationId: readFile
+      summary: Read a file from a GitHub repository.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/readFileRequest"
+      responses:
+        "200":
+          description: File read successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/readFileResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/errorResponse"
+  /api/listFiles:
+    post:
+      operationId: listFiles
+      summary: List all files in a GitHub repository.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/listFilesRequest"
+      responses:
+        "200":
+          description: Files listed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/listFilesResponse"
         "401":
           description: Unauthorized
           content:
@@ -67,6 +129,38 @@ components:
         branchName:
           type: string
           description: The branch to commit to.
+    readFileRequest:
+      type: object
+      required:
+        - ownerUsername
+        - repositoryName
+        - filePath
+      properties:
+        ownerUsername:
+          type: string
+          description: The username of the repository owner.
+        repositoryName:
+          type: string
+          description: The name of the repository.
+        filePath:
+          type: string
+          description: The path to the file to read.
+    listFilesRequest:
+      type: object
+      required:
+        - ownerUsername
+        - repositoryName
+        - branchName
+      properties:
+        ownerUsername:
+          type: string
+          description: The username of the repository owner.
+        repositoryName:
+          type: string
+          description: The name of the repository.
+        branchName:
+          type: string
+          description: The branch to list files from.
     commitResponse:
       type: object
       required:
@@ -75,6 +169,34 @@ components:
         commitMessage:
           type: string
           description: A message about the result of the commit operation.
+    readFileResponse:
+      type: object
+      required:
+        - content
+      properties:
+        content:
+          type: string
+          description: The content of the file.
+    listFilesResponse:
+      type: object
+      required:
+        - files
+      properties:
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+                description: The path of the file.
+              sha:
+                type: string
+                description: The sha of the file.
+              size:
+                type: integer
+                format: int64
+                description: The size of the file in bytes.
     errorResponse:
       type: object
       required:
