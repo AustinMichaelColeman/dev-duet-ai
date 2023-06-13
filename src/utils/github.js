@@ -1,4 +1,4 @@
-import { Octokit } from '@octokit/rest';
+import { Octokit } from "@octokit/rest";
 
 export default class GitHub {
   constructor(token) {
@@ -10,7 +10,7 @@ export default class GitHub {
       owner,
       repo,
       content,
-      encoding: 'utf-8',
+      encoding: "utf-8",
     });
     return data;
   }
@@ -52,5 +52,14 @@ export default class GitHub {
       ref,
       sha,
     });
+  }
+
+  async getContent(owner, repo, path) {
+    const { data } = await this.octokit.repos.getContent({
+      owner,
+      repo,
+      path,
+    });
+    return data;
   }
 }

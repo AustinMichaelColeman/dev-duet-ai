@@ -1,5 +1,5 @@
-import { Octokit } from '@octokit/rest';
-import extractToken from '@/utils/extractToken';
+import GitHub from "@/utils/github";
+import extractToken from "@/utils/extractToken";
 
 export default async function readFile(req, res) {
   const { ownerUsername, repositoryName, filePath } = req.body;
@@ -12,22 +12,24 @@ export default async function readFile(req, res) {
     return res.status(401).json({ error: error.message });
   }
 
-  const octokit = new Octokit({ auth: access_token });
+  const github = new GitHub(access_token);
 
   try {
-    const { data: contentData } = await octokit.repos.getContent({
-      owner: ownerUsername,
-      repo: repositoryName,
-      path: filePath,
-    });
+    const contentData = await github.getContent(
+      ownerUsername,
+      repositoryName,
+      filePath
+    );
 
-    const fileContent = Buffer.from(contentData.content, 'base64').toString('utf-8');
+    const fileContent = Buffer.from(contentData.content, "base64").toString(
+      "utf-8"
+    );
 
     res.status(200).json({ content: fileContent });
   } catch (error) {
     console.error(error);
     res
       .status(500)
-      .json({ message: 'An error occurred while reading the file.' });
+      .json({ message: "An error occurred while reading the file." });
   }
 }
