@@ -1,5 +1,5 @@
 import GitHub from "@/utils/github";
-import extractToken from "@/utils/extractToken";
+import { extractToken } from "@/utils/extractToken";
 
 export default async function readFile(req, res) {
   const { ownerUsername, repositoryName, filePath } = req.body;

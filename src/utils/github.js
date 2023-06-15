@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit/rest";
 
-export default class GitHub {
+export class GitHub {
   constructor(token) {
     this.octokit = new Octokit({ auth: token });
   }
