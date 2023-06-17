@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import replacePlaceholders from "@/utils/replacePlaceholders.js";
+import { replacePlaceholders } from "@/utils/replacePlaceholders.js";
 
 export default async function openapi(req, res) {
   try {

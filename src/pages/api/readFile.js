@@ -1,4 +1,4 @@
-import GitHub from "@/utils/github";
+import { GitHub } from "@/utils/github";
 import { extractToken } from "@/utils/extractToken";
 
 export default async function readFile(req, res) {
